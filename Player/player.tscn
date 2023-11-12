@@ -1,0 +1,155 @@
+[gd_scene load_steps=18 format=3 uid="uid://cuu61beyq834y"]
+
+[ext_resource type="Script" path="res://Player/Player.gd" id="1_06pqv"]
+[ext_resource type="Texture2D" uid="uid://do6ddylv2hvwe" path="res://Assets/Cat Sprite Sheet.png" id="2_wxhj3"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_xqjm2"]
+radius = 5.0
+height = 14.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8pmcf"]
+atlas = ExtResource("2_wxhj3")
+region = Rect2(96, 256, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yshwx"]
+atlas = ExtResource("2_wxhj3")
+region = Rect2(0, 128, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fpv3d"]
+atlas = ExtResource("2_wxhj3")
+region = Rect2(0, 256, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5ehad"]
+atlas = ExtResource("2_wxhj3")
+region = Rect2(32, 256, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b6kd6"]
+atlas = ExtResource("2_wxhj3")
+region = Rect2(64, 256, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_aui1v"]
+atlas = ExtResource("2_wxhj3")
+region = Rect2(96, 256, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xgb88"]
+atlas = ExtResource("2_wxhj3")
+region = Rect2(32, 128, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0eo8p"]
+atlas = ExtResource("2_wxhj3")
+region = Rect2(64, 128, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6aanq"]
+atlas = ExtResource("2_wxhj3")
+region = Rect2(96, 128, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h0mbj"]
+atlas = ExtResource("2_wxhj3")
+region = Rect2(128, 128, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qjmqi"]
+atlas = ExtResource("2_wxhj3")
+region = Rect2(160, 128, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eqhgc"]
+atlas = ExtResource("2_wxhj3")
+region = Rect2(192, 128, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c8teb"]
+atlas = ExtResource("2_wxhj3")
+region = Rect2(224, 128, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_gm2cy"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8pmcf")
+}],
+"loop": false,
+"name": &"Fall",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yshwx")
+}],
+"loop": false,
+"name": &"Idle",
+"speed": 3.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fpv3d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5ehad")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b6kd6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_aui1v")
+}],
+"loop": false,
+"name": &"Jump",
+"speed": 3.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xgb88")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0eo8p")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6aanq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h0mbj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qjmqi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eqhgc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c8teb")
+}],
+"loop": true,
+"name": &"Walk",
+"speed": 6.0
+}]
+
+[node name="Player" type="CharacterBody2D"]
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("1_06pqv")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(3.63798e-12, 0)
+rotation = 1.5708
+scale = Vector2(1.5, 1.5)
+shape = SubResource("CapsuleShape2D_xqjm2")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -14)
+scale = Vector2(1.5, 1.5)
+sprite_frames = SubResource("SpriteFrames_gm2cy")
+animation = &"Walk"
+autoplay = "Jump"
+
+[node name="phb" type="Area2D" parent="."]
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="phb"]
+position = Vector2(3.63798e-12, 0)
+rotation = 1.5708
+scale = Vector2(1.5, 1.5)
+shape = SubResource("CapsuleShape2D_xqjm2")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+limit_left = 0
+limit_top = 0
+limit_bottom = -50
+
+[connection signal="area_entered" from="phb" to="." method="_on_area_2d_area_entered"]
